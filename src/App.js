@@ -1,25 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import { UseReducer } from "./useReducer";
+import "./App.css";
+import { ClassState } from "./ClassState.js";
+import { UseState } from "./UseState.js";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<div className="App">
+			<UseState name="Use State" />
+			<ClassState name="Class State" />
+			<UseReducer name="Use Reducer" />
+		</div>
+	);
 }
 
 export default App;
