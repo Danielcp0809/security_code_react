@@ -37,6 +37,7 @@ function UseState({ name }) {
 			{!loading && error && <p>Error: El codigo es incorrecto</p>}
 			<input
 				placeholder="Codigo de seguridad"
+				value={value}
 				onChange={(event) => {
 					setValue(event.target.value);
 				}}
