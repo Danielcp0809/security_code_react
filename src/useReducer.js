@@ -1,5 +1,5 @@
 import { CircularProgress } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 const initialState = {
 	value: "",
@@ -8,55 +8,7 @@ const initialState = {
 	deleted: false,
 	confirmed: false,
 };
-/// forma base de un reduce
-// const reducer = (state, action) => {
 
-// }
-
-/// FORMAS DE CREAR UN REDUCER
-
-/// 1era forma
-// const reducerIf = (state, action) => {
-// 	/// comparamos con un nombre clave del estado
-// 	if (action.type === "ERROR") {
-// 		return {
-// 			/// tenemos que retornar un objeto !importante
-// 			...state,
-// 			error: true,
-// 			loading: false,
-// 		};
-// 	} else if (action.type === "CHECK") {
-// 		return {
-// 			...state,
-// 			loading: true,
-// 		};
-// 	} else {
-// 		/// si el action.type no cumple con ninguna de las palabras clave
-// 		return state;
-// 	}
-// };
-
-/// 2da forma
-// const reducerSwith = (state, action) => {
-// 	switch (action.type) {
-// 		case "ERROR":
-// 			return {
-// 				/// tenemos que retornar un objeto !importante
-// 				...state,
-// 				error: true,
-// 				loading: false,
-// 			};
-// 		case "CHECK":
-// 			return {
-// 				...state,
-// 				loading: true,
-// 			};
-// 		default:
-// 			return { ...state };
-// 	}
-// };
-
-/// 3ra forma (reducerObject + reducerFunction)
 const reducerObject = (state, action) => ({
 	[actionTypes.confirm]: {
 		...state,
@@ -109,64 +61,16 @@ const actionTypes = {
 const SECURITY_CODE = "paradigma";
 
 function UseReducer({ name }) {
-	// estado compuesto usando useState
-
-	// const [state, setState] = useState({
-	// 	value: "",
-	// 	error: false,
-	// 	loading: false,
-	// 	deleted: false, // mostrar la pantalla de elimado con exito
-	// 	confirmed: false, // para pasar a la pantalla de confirmacion
-	// });
-
-	// useReducer
 	const [state, dispatch] = React.useReducer(reducerFunction, initialState);
 
-	const onConfirm = () => {
-		/// cuando queramos pasar al estado de confirmacion
-		dispatch({
-			type: actionTypes.confirm,
-		});
-	};
-
-	const onError = () => {
-		/// cuando queramos pasar al estado de errpr
-		dispatch({
-			type: actionTypes.error,
-		});
-	};
-
-	const onWrite = (event) => {
-		/// estado de cambio en el input
-		dispatch({
-			type: actionTypes.write,
-			payload: event.target.value,
-		});
-	};
-
-	const onCheck = () => {
-		/// estado de comprobacion del codigo
-		dispatch({
-			type: actionTypes.check,
-		});
-	};
-
-	const onDelete = () => {
-		/// estado de confirmar la eliminacion del componente
-		dispatch({
-			type: actionTypes.delete,
-		});
-	};
-
-	const onReset = () => {
-		/// volver al estado original
-		dispatch({
-			type: actionTypes.reset,
-		});
-	};
+	const onConfirm = () => dispatch({type: actionTypes.confirm});
+	const onError = () => dispatch({type: actionTypes.error});
+	const onWrite = (event) => dispatch({type: actionTypes.write, payload: event.target.value});
+	const onCheck = () => dispatch({type: actionTypes.check});
+	const onDelete = () => dispatch({type: actionTypes.delete});
+	const onReset = () => dispatch({type: actionTypes.reset});
 
 	useEffect(() => {
-		/// useEffect para simular una respuesta del backen
 		if (!!state.loading) {
 			setTimeout(() => {
 				if (state.value !== SECURITY_CODE) {
@@ -174,9 +78,10 @@ function UseReducer({ name }) {
 				} else {
 					onConfirm();
 				}
-			}, 2000); /// si loading es true, 3sg despues poner en falso.
+			}, 2000);
 		}
 	}, [state.loading]);
+
 	if (!state.deleted && !state.confirmed) {
 		return (
 			<div>

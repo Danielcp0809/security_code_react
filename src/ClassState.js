@@ -13,14 +13,7 @@ class ClassState extends React.Component {
 			loading: false,
 		};
 	}
-
-	// componentes del ciclo de vida
-	// componentWillMount -> primero en ejecutarse (ya no es recomendado en react o usar UNSAFE_componenteWillMount)
-	// componentDidMount -> segundo en ejecutarse
-	// componentWillUnmount -> cuando el componente desaparse
-
 	componentDidUpdate() {
-		/// este componente se ejecuta cuando se ha renderizado nuevamente el componente por un cambio en el estado
 		if (this.state.loading) {
 			setTimeout(() => {
 				if (SECURITY_CODE !== this.state.value) {

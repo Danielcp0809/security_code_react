@@ -4,17 +4,15 @@ import React, { useState, useEffect } from "react";
 const SECURITY_CODE = "paradigma";
 
 function UseState({ name }) {
-	// estado compuesto usando useState
 	const [state, setState] = useState({
 		value: "",
 		error: false,
 		loading: false,
-		deleted: false, // mostrar la pantalla de elimado con exito
-		confirmed: false, // para pasar a la pantalla de confirmacion
+		deleted: false, 
+		confirmed: false, 
 	});
 
 	const onConfirm = () => {
-		/// cuando queramos pasar al estado de confirmacion
 		setState({
 			...state,
 			error: false,
@@ -24,7 +22,6 @@ function UseState({ name }) {
 	};
 
 	const onError = () => {
-		/// cuando queramos pasar al estado de errpr
 		setState({
 			...state,
 			error: true,
@@ -33,7 +30,6 @@ function UseState({ name }) {
 	};
 
 	const onWrite = (event) => {
-		/// estado de cambio en el input
 		setState({
 			...state,
 			value: event.target.value,
@@ -41,7 +37,6 @@ function UseState({ name }) {
 	};
 
 	const onCheck = () => {
-		/// estado de comprobacion del codigo
 		setState({
 			...state,
 			loading: true,
@@ -49,7 +44,6 @@ function UseState({ name }) {
 	};
 
 	const onDelete = () => {
-		/// estado de confirmar la eliminacion del componente
 		setState({
 			...state,
 			deleted: true,
@@ -57,7 +51,6 @@ function UseState({ name }) {
 	};
 
 	const onReset = () => {
-		/// volver al estado original
 		setState({
 			...state,
 			confirmed: false,
@@ -67,7 +60,6 @@ function UseState({ name }) {
 	};
 
 	useEffect(() => {
-		/// useEffect para simular una respuesta del backen
 		if (!!state.loading) {
 			setTimeout(() => {
 				if (state.value !== SECURITY_CODE) {
@@ -75,9 +67,10 @@ function UseState({ name }) {
 				} else {
 					onConfirm();
 				}
-			}, 2000); /// si loading es true, 3sg despues poner en falso.
+			}, 2000);
 		}
 	}, [state.loading]);
+
 	if (!state.deleted && !state.confirmed) {
 		return (
 			<div>
