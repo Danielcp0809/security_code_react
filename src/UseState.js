@@ -4,23 +4,42 @@ import React, { useState, useEffect } from "react";
 const SECURITY_CODE = "paradigma";
 
 function UseState({ name }) {
-	const [error, setError] = useState(false);
-	const [loading, setLoading] = useState(false);
-	const [value, setValue] = useState("");
+	// const [error, setError] = useState(false);
+	// const [loading, setLoading] = useState(false);
+	// const [value, setValue] = useState("");
+	// estado compuesto usando useState
+	const [state, setState] = useState({
+		value: "",
+		error: false,
+		loading: false,
+	});
 
 	useEffect(() => {
 		/// useEffect para simular una respuesta del backen
-		if (loading) {
+		console.log("comprobando clave");
+		if (!!state.loading) {
 			setTimeout(() => {
-				setValue("");
-				if (value !== SECURITY_CODE) {
-					setError(true);
+				if (state.value !== SECURITY_CODE) {
+					setState({
+						...state,
+						error: true,
+						loading: false,
+					});
+					// setError(true)
+					// setLoading(false)
+				} else {
+					setState({
+						...state,
+						error: false,
+						loading: false,
+					});
+					// setLoading(false)
+					// setError(false)
 				}
-				setLoading(false);
 			}, 2000); /// si loading es true, 3sg despues poner en falso.
 		}
-	}, [loading]);
-
+	}, [state.loading]);
+	console.log(state.error);
 	return (
 		<div>
 			<h2>Eliminar {name}</h2>
@@ -28,23 +47,31 @@ function UseState({ name }) {
 				Por favor, escribe el codigo de seguridad para comprobar que quieres eleminar
 				esta seccion
 			</p>
-			{loading && (
+			{state.loading && (
 				<div>
 					<CircularProgress />
 					<p>Loading...</p>
 				</div>
 			)}
-			{!loading && error && <p>Error: El codigo es incorrecto</p>}
+			{!state.loading && state.error && <p>Error: El codigo es incorrecto</p>}
 			<input
 				placeholder="Codigo de seguridad"
-				value={value}
+				value={state.value}
 				onChange={(event) => {
-					setValue(event.target.value);
+					setState({
+						...state,
+						value: event.target.value,
+					});
+					// setValue(event.target.value)
 				}}
 			/>
 			<button
 				onClick={() => {
-					setLoading(true);
+					setState({
+						...state,
+						loading: true,
+					});
+					// setLoading(true)
 				}}
 			>
 				Comprobar
