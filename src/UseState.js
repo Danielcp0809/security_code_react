@@ -1,14 +1,21 @@
 import { CircularProgress } from "@mui/material";
 import React, { useState, useEffect } from "react";
 
+const SECURITY_CODE = "paradigma";
+
 function UseState({ name }) {
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [value, setValue] = useState("");
 
 	useEffect(() => {
 		/// useEffect para simular una respuesta del backen
 		if (loading) {
 			setTimeout(() => {
+				setValue("");
+				if (value !== SECURITY_CODE) {
+					setError(true);
+				}
 				setLoading(false);
 			}, 2000); /// si loading es true, 3sg despues poner en falso.
 		}
@@ -27,8 +34,13 @@ function UseState({ name }) {
 					<p>Loading...</p>
 				</div>
 			)}
-			{error && <p>Error: El codigo es incorrecto</p>}
-			<input placeholder="Codigo de seguridad" />
+			{!loading && error && <p>Error: El codigo es incorrecto</p>}
+			<input
+				placeholder="Codigo de seguridad"
+				onChange={(event) => {
+					setValue(event.target.value);
+				}}
+			/>
 			<button
 				onClick={() => {
 					setLoading(true);
