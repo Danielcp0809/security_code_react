@@ -58,35 +58,35 @@ const initialState = {
 
 /// 3ra forma (reducerObject + reducerFunction)
 const reducerObject = (state, action) => ({
-	CONFIRM:{
+	[actionTypes.confirm]: {
 		...state,
 		error: false,
 		loading: false,
 		confirmed: true,
 	},
-	ERROR: {
+	[actionTypes.error]: {
 		...state,
 		error: true,
 		loading: false,
 	},
-	WRITE:{
+	[actionTypes.write]: {
 		...state,
 		value: action.payload,
 	},
-	CHECK: {
+	[actionTypes.check]: {
 		...state,
 		loading: true,
 	},
-	DELETE:{
+	[actionTypes.delete]: {
 		...state,
 		deleted: true,
 	},
-	RESET:{
+	[actionTypes.reset]: {
 		...state,
 		confirmed: false,
 		deleted: false,
 		value: "",
-	}
+	},
 });
 
 const reducerFunction = (state, action) => {
@@ -95,6 +95,15 @@ const reducerFunction = (state, action) => {
 	} else {
 		return { ...state };
 	}
+};
+
+const actionTypes = {
+	confirm: "CONFIRM",
+	error: "ERROR",
+	check: "CHECK",
+	write: "WRITE",
+	delete: "DELETE",
+	reset: "RESET",
 };
 
 const SECURITY_CODE = "paradigma";
@@ -110,85 +119,50 @@ function UseReducer({ name }) {
 	// 	confirmed: false, // para pasar a la pantalla de confirmacion
 	// });
 
-	// useReducer 
+	// useReducer
 	const [state, dispatch] = React.useReducer(reducerFunction, initialState);
 
 	const onConfirm = () => {
 		/// cuando queramos pasar al estado de confirmacion
-		// setState({
-		// 	...state,
-		// 	error: false,
-		// 	loading: false,
-		// 	confirmed: true,
-		// });
-
 		dispatch({
-			type:'CONFIRM'
-		})
+			type: actionTypes.confirm,
+		});
 	};
 
 	const onError = () => {
 		/// cuando queramos pasar al estado de errpr
-		// setState({
-		// 	...state,
-		// 	error: true,
-		// 	loading: false,
-		// });
-
 		dispatch({
-			type:'ERROR'
-		})
+			type: actionTypes.error,
+		});
 	};
 
 	const onWrite = (event) => {
 		/// estado de cambio en el input
-		// setState({
-		// 	...state,
-		// 	value: event.target.value,
-		// });
-
 		dispatch({
-			type:'WRITE',
-			payload:event.target.value
-		})
+			type: actionTypes.write,
+			payload: event.target.value,
+		});
 	};
 
 	const onCheck = () => {
 		/// estado de comprobacion del codigo
-		// setState({
-		// 	...state,
-		// 	loading: true,
-		// });
-
 		dispatch({
-			type:'CHECK'
-		})
+			type: actionTypes.check,
+		});
 	};
 
 	const onDelete = () => {
 		/// estado de confirmar la eliminacion del componente
-		// setState({
-		// 	...state,
-		// 	deleted: true,
-		// });
-
 		dispatch({
-			type:'DELETE'
-		})
+			type: actionTypes.delete,
+		});
 	};
 
 	const onReset = () => {
 		/// volver al estado original
-		// setState({
-		// 	...state,
-		// 	confirmed: false,
-		// 	deleted: false,
-		// 	value: "",
-		// });
-		
 		dispatch({
-			type:'RESET'
-		})
+			type: actionTypes.reset,
+		});
 	};
 
 	useEffect(() => {
