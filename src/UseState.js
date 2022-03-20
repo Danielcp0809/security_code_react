@@ -10,7 +10,7 @@ function UseState({ name }) {
 		if (loading) {
 			setTimeout(() => {
 				setLoading(false);
-			}, 3000); /// si loading es true, 3sg despues poner en falso.
+			}, 2000); /// si loading es true, 3sg despues poner en falso.
 		}
 	}, [loading]);
 
